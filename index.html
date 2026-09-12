@@ -3,717 +3,521 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Unity 客户端开发求职简历与项目展示" />
-  <meta name="theme-color" content="#0b1020" />
-  <title>Unity 客户端开发 · 个人简历</title>
+  <meta name="description" content="Unity 客户端开发一页 A4 简历" />
+  <title>Unity 客户端开发 · 一页简历</title>
   <style>
     :root {
-      color-scheme: dark;
-      --bg: #080b13;
-      --surface: #0f1422;
-      --surface-2: #151c2d;
-      --line: rgba(255, 255, 255, 0.09);
-      --text: #f4f7fb;
-      --muted: #9da9bd;
-      --accent: #73e0c2;
-      --accent-2: #7db4ff;
-      --shadow: 0 24px 70px rgba(0, 0, 0, 0.26);
-      --radius: 24px;
-      --max: 1120px;
+      --ink: #1f2937;
+      --muted: #667085;
+      --soft: #8b95a5;
+      --line: #d9e0e8;
+      --line-strong: #b8c5d4;
+      --accent: #245f9e;
+      --accent-soft: #eef5fb;
+      --paper: #ffffff;
+      --desk: #e8ebef;
     }
 
     * { box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      color: var(--ink);
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
 
     body {
-      margin: 0;
-      min-width: 320px;
-      background:
-        radial-gradient(circle at 16% 6%, rgba(115, 224, 194, 0.10), transparent 28rem),
-        radial-gradient(circle at 86% 18%, rgba(125, 180, 255, 0.10), transparent 30rem),
-        var(--bg);
-      color: var(--text);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
+      min-width: 210mm;
+      background: var(--desk);
+      padding: 14mm 0;
+      font-size: 9.35pt;
+      line-height: 1.52;
     }
 
-    a { color: inherit; text-decoration: none; }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-    .page {
-      width: min(calc(100% - 36px), var(--max));
+    .sheet {
+      width: 210mm;
+      height: 297mm;
       margin: 0 auto;
+      padding: 11.5mm 12mm 10.5mm;
+      background: var(--paper);
+      box-shadow: 0 10px 36px rgba(20, 31, 45, 0.14);
+      overflow: hidden;
     }
 
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(18px);
-      background: rgba(8, 11, 19, 0.72);
-      border-bottom: 1px solid var(--line);
+    .header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8mm;
+      align-items: start;
+      padding-bottom: 5mm;
+      border-bottom: 1.5px solid var(--ink);
     }
 
-    .nav {
-      min-height: 68px;
+    .identity {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
+      align-items: baseline;
+      gap: 5mm;
+      margin-bottom: 2.2mm;
     }
 
-    .brand {
+    .name {
+      margin: 0;
+      font-size: 24pt;
+      line-height: 1;
+      letter-spacing: 0.06em;
+      font-weight: 760;
+    }
+
+    .role {
+      color: var(--accent);
+      font-size: 11.2pt;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .summary {
+      max-width: 135mm;
+      margin: 0 0 2.6mm;
+      color: #3d4857;
+      font-size: 9.6pt;
+      line-height: 1.58;
+    }
+
+    .contact {
       display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 13px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      flex-wrap: wrap;
+      gap: 1.2mm 4.2mm;
       color: var(--muted);
+      font-size: 8.55pt;
+    }
+
+    .contact span::before {
+      content: "·";
+      margin-right: 1.5mm;
+      color: var(--line-strong);
+    }
+
+    .contact span:first-child::before { display: none; }
+
+    .qr {
+      width: 24mm;
+      height: 24mm;
+      border: 1px solid var(--line-strong);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: var(--soft);
+      font-size: 7.2pt;
+      line-height: 1.35;
+      padding: 2mm;
+    }
+
+    .qr-caption {
+      margin-top: 1.2mm;
+      color: var(--soft);
+      text-align: center;
+      font-size: 7pt;
+      letter-spacing: 0.03em;
+    }
+
+    .body-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 0.95fr);
+      gap: 7mm;
+      padding-top: 5mm;
+    }
+
+    .main, .side { min-width: 0; }
+
+    .section {
+      margin-bottom: 5.1mm;
+      break-inside: avoid;
+    }
+
+    .section:last-child { margin-bottom: 0; }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 2.4mm;
+      margin: 0 0 2.4mm;
+      color: var(--ink);
+      font-size: 11.2pt;
+      font-weight: 760;
+      letter-spacing: 0.035em;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 2.2mm;
+      height: 4mm;
+      border-radius: 0.5mm;
+      background: var(--accent);
+      flex: 0 0 auto;
+    }
+
+    .project {
+      padding: 3.5mm 4mm 3.4mm;
+      border: 1px solid var(--line);
+      border-left: 2.2px solid var(--accent);
+      background: #fbfcfe;
+    }
+
+    .project-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 4mm;
+      align-items: baseline;
+      margin-bottom: 1.5mm;
+    }
+
+    .project-name {
+      margin: 0;
+      font-size: 12.3pt;
+      font-weight: 760;
+      letter-spacing: 0.01em;
+    }
+
+    .project-meta {
+      color: var(--muted);
+      font-size: 8.1pt;
       white-space: nowrap;
     }
 
-    .brand-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 22px rgba(115, 224, 194, 0.55);
+    .project-intro {
+      margin: 0 0 2.2mm;
+      color: #465266;
+      font-size: 8.8pt;
     }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 22px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .nav-links a:hover { color: var(--text); }
-
-    .hero {
-      padding: 100px 0 72px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
-      gap: 56px;
-      align-items: end;
-    }
-
-    .eyebrow,
-    .section-kicker {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-
-    h1, h2, h3, p { margin-top: 0; }
-
-    h1 {
-      margin: 14px 0 22px;
-      font-size: clamp(48px, 8vw, 94px);
-      line-height: 0.98;
-      letter-spacing: -0.055em;
-      font-weight: 820;
-    }
-
-    .hero-title span {
-      display: block;
-      color: var(--muted);
-      font-size: 0.48em;
-      line-height: 1.22;
-      margin-top: 12px;
-      letter-spacing: -0.035em;
-      font-weight: 650;
-    }
-
-    .hero-copy {
-      max-width: 720px;
-      font-size: 18px;
-      color: #c9d1df;
-    }
-
-    .hero-copy strong { color: var(--text); }
-
-    .hero-actions {
+    .stack {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 30px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 46px;
-      padding: 0 18px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.035);
-      font-size: 14px;
-      font-weight: 650;
-      transition: 160ms ease;
-    }
-
-    .button:hover {
-      transform: translateY(-1px);
-      border-color: rgba(255, 255, 255, 0.18);
-      background: rgba(255, 255, 255, 0.065);
-    }
-
-    .button.primary {
-      background: var(--accent);
-      color: #07110e;
-      border-color: transparent;
-    }
-
-    .button.primary:hover { background: #91ecd3; }
-
-    .hero-meta {
-      padding: 22px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018));
-      box-shadow: var(--shadow);
-    }
-
-    .meta-row {
-      display: grid;
-      grid-template-columns: 86px 1fr;
-      gap: 12px;
-      padding: 13px 0;
-      border-bottom: 1px solid var(--line);
-      font-size: 14px;
-    }
-
-    .meta-row:last-child { border-bottom: 0; }
-    .meta-label { color: var(--muted); }
-    .meta-value { color: var(--text); font-weight: 610; }
-
-    section { padding: 74px 0; }
-
-    .section-head {
-      display: grid;
-      grid-template-columns: 0.62fr 1.38fr;
-      gap: 48px;
-      margin-bottom: 34px;
-      align-items: start;
-    }
-
-    h2 {
-      margin: 9px 0 0;
-      font-size: clamp(30px, 4vw, 46px);
-      line-height: 1.08;
-      letter-spacing: -0.035em;
-    }
-
-    .section-lead {
-      color: var(--muted);
-      font-size: 16px;
-      max-width: 690px;
-    }
-
-    .grid { display: grid; gap: 18px; }
-    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-
-    .card {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(255,255,255,0.025);
-      padding: 28px;
-    }
-
-    .project-card {
-      position: relative;
-      overflow: hidden;
-      padding: 36px;
-      background:
-        linear-gradient(135deg, rgba(115,224,194,0.08), transparent 35%),
-        linear-gradient(315deg, rgba(125,180,255,0.08), transparent 40%),
-        var(--surface);
-    }
-
-    .project-card::after {
-      content: "GAMEAR";
-      position: absolute;
-      right: 22px;
-      top: 4px;
-      font-size: clamp(62px, 11vw, 132px);
-      font-weight: 850;
-      letter-spacing: -0.07em;
-      color: rgba(255, 255, 255, 0.025);
-      pointer-events: none;
-    }
-
-    .project-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(115,224,194,0.22);
-      color: var(--accent);
-      background: rgba(115,224,194,0.06);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-
-    .project-title {
-      margin: 22px 0 12px;
-      font-size: 38px;
-      line-height: 1.04;
-      letter-spacing: -0.035em;
-    }
-
-    .project-subtitle {
-      color: #cbd4e4;
-      max-width: 760px;
-      font-size: 17px;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 24px 0 26px;
+      gap: 1.2mm;
+      margin-bottom: 2.4mm;
     }
 
     .tag {
-      padding: 6px 10px;
-      border: 1px solid var(--line);
-      border-radius: 9px;
-      color: #bdc8d9;
-      font-size: 12px;
-      background: rgba(255,255,255,0.025);
+      padding: 0.5mm 1.6mm;
+      border-radius: 1.2mm;
+      background: var(--accent-soft);
+      color: #315f8e;
+      font-size: 7.55pt;
+      line-height: 1.5;
     }
 
-    .project-points {
+    ul {
+      margin: 0;
+      padding-left: 4.3mm;
+    }
+
+    li {
+      margin: 0 0 1.15mm;
+      padding-left: 0.4mm;
+    }
+
+    li:last-child { margin-bottom: 0; }
+    li::marker { color: var(--accent); }
+
+    .project ul {
+      color: #364152;
+      font-size: 8.65pt;
+      line-height: 1.53;
+    }
+
+    .project strong { color: #23384e; }
+
+    .experience-item {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px 26px;
-      margin-top: 20px;
+      grid-template-columns: 27mm 1fr;
+      gap: 3.3mm;
+      padding: 2.3mm 0;
+      border-bottom: 1px solid var(--line);
     }
 
-    .point {
-      padding-top: 14px;
-      border-top: 1px solid var(--line);
+    .experience-item:first-of-type { padding-top: 0.4mm; }
+    .experience-item:last-child { border-bottom: 0; padding-bottom: 0; }
+
+    .time {
+      color: var(--accent);
+      font-size: 8.2pt;
+      font-weight: 700;
+      white-space: nowrap;
     }
 
-    .point strong {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 14px;
+    .exp-title {
+      margin: 0 0 0.7mm;
+      font-size: 9.4pt;
+      font-weight: 720;
     }
 
-    .point span {
+    .exp-copy {
+      margin: 0;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 8.35pt;
+      line-height: 1.48;
     }
 
-    .skill-title {
-      margin-bottom: 8px;
-      font-size: 17px;
-      letter-spacing: -0.01em;
+    .compact-note {
+      padding: 2.6mm 3.2mm;
+      border-left: 2px solid var(--line-strong);
+      background: #f8fafc;
+      color: #4b5565;
+      font-size: 8.45pt;
+      line-height: 1.55;
+    }
+
+    .side .section {
+      margin-bottom: 4.8mm;
+    }
+
+    .skill-group {
+      padding-bottom: 2.6mm;
+      margin-bottom: 2.6mm;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .skill-group:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    .skill-label {
+      margin: 0 0 1mm;
+      color: #2e3d50;
+      font-size: 8.8pt;
+      font-weight: 760;
     }
 
     .skill-copy {
       margin: 0;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 8.2pt;
+      line-height: 1.52;
     }
 
-    .skill-index {
-      display: inline-block;
-      margin-bottom: 28px;
-      color: var(--accent-2);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 12px;
+    .education {
+      padding: 2.8mm 3.2mm;
+      background: #f8fafc;
+      border-top: 2px solid var(--accent);
     }
 
-    .ai-card {
-      display: grid;
-      grid-template-columns: 0.82fr 1.18fr;
-      gap: 38px;
-      padding: 36px;
-      background: linear-gradient(140deg, rgba(125,180,255,0.07), rgba(115,224,194,0.035));
+    .school {
+      margin: 0 0 0.8mm;
+      font-size: 10.1pt;
+      font-weight: 760;
     }
 
-    .ai-card blockquote {
+    .edu-meta {
+      color: var(--muted);
+      font-size: 8pt;
+      line-height: 1.55;
+    }
+
+    .bullet-mini {
       margin: 0;
-      font-size: 24px;
+      padding-left: 4mm;
+      color: var(--muted);
+      font-size: 8.15pt;
+      line-height: 1.48;
+    }
+
+    .bullet-mini li { margin-bottom: 1.1mm; }
+
+    .footer-note {
+      margin-top: 3.2mm;
+      padding-top: 2.6mm;
+      border-top: 1px solid var(--line);
+      color: var(--soft);
+      font-size: 7.3pt;
       line-height: 1.45;
-      letter-spacing: -0.025em;
-      font-weight: 660;
     }
 
-    .ai-list {
-      display: grid;
-      gap: 12px;
-    }
-
-    .ai-item {
-      padding: 14px 0;
-      border-bottom: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .ai-item:last-child { border-bottom: 0; }
-    .ai-item strong { color: var(--text); }
-
-    .timeline {
-      display: grid;
-      gap: 0;
-      border-top: 1px solid var(--line);
-    }
-
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 34px;
-      padding: 27px 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .timeline-time {
-      color: var(--accent);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 13px;
-    }
-
-    .timeline-title {
-      margin: 0 0 7px;
-      font-size: 18px;
-    }
-
-    .timeline-copy {
+    @page {
+      size: A4;
       margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .statement {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 22px;
-    }
-
-    .statement .card p:last-child { margin-bottom: 0; }
-
-    .footer {
-      padding: 54px 0 72px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .muted { color: var(--muted); }
-    .accent { color: var(--accent); }
-
-    @media (max-width: 820px) {
-      .nav-links { display: none; }
-      .hero,
-      .section-head,
-      .ai-card,
-      .statement { grid-template-columns: 1fr; }
-      .hero { padding-top: 72px; gap: 30px; }
-      .grid.two,
-      .grid.three,
-      .project-points { grid-template-columns: 1fr; }
-      .timeline-item { grid-template-columns: 1fr; gap: 7px; }
-      section { padding: 58px 0; }
-    }
-
-    @media (max-width: 520px) {
-      .page { width: min(calc(100% - 24px), var(--max)); }
-      .card, .project-card, .ai-card { padding: 22px; }
-      .hero-copy { font-size: 16px; }
-      .project-title { font-size: 31px; }
     }
 
     @media print {
-      :root {
-        color-scheme: light;
-        --bg: #fff;
-        --surface: #fff;
-        --surface-2: #fff;
-        --line: #d8dde6;
-        --text: #10141c;
-        --muted: #5d6777;
-        --accent: #0a6b59;
-        --accent-2: #215ea8;
+      html, body {
+        width: 210mm;
+        height: 297mm;
+        background: #fff;
       }
 
-      body { background: #fff; font-size: 11pt; }
-      .topbar, .hero-actions { display: none; }
-      .page { width: 100%; max-width: none; padding: 0 12mm; }
-      .hero { padding: 12mm 0 8mm; }
-      section { padding: 8mm 0; break-inside: avoid; }
-      .card, .hero-meta, .project-card { box-shadow: none; background: #fff; }
-      .project-card::after { display: none; }
-      a { color: inherit; }
+      body {
+        min-width: 0;
+        padding: 0;
+      }
+
+      .sheet {
+        margin: 0;
+        box-shadow: none;
+        page-break-after: avoid;
+      }
+
+      * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="page nav">
-      <div class="brand"><span class="brand-dot"></span> Resume / Unity Client</div>
-      <nav class="nav-links" aria-label="页面导航">
-        <a href="#project">项目</a>
-        <a href="#skills">能力</a>
-        <a href="#experience">经历</a>
-        <a href="#about">关于我</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <div class="page hero">
+  <main class="sheet">
+    <header class="header">
       <div>
-        <div class="eyebrow">Unity Client Developer · 求职中</div>
-        <h1 class="hero-title">
-          Unity 客户端开发
-          <span>游戏客户端 / C# / Mobile</span>
-        </h1>
-        <p class="hero-copy">
-          西安电子科技大学本科毕业，当前明确以 <strong>Unity 客户端开发</strong> 为职业方向。
-          通过完整项目实践持续补齐客户端工程能力，并为项目自行搭建必要的服务端与部署链路。
-          可以接受实习或初级岗位，希望尽快进入真实研发环境持续成长。
+        <div class="identity">
+          <h1 class="name">姓名待填</h1>
+          <div class="role">Unity 客户端开发</div>
+        </div>
+        <p class="summary">
+          西安电子科技大学本科。求职方向明确为 Unity 游戏客户端开发，近期集中进行 Unity 客户端学习与项目实践，正在独立完成一款 2D 回合制手游 Demo。愿从初级 / 培养型岗位起步，以可运行项目、代码质量和持续学习证明能力。
         </p>
-        <div class="hero-actions">
-          <a class="button primary" href="#project">查看项目</a>
-          <a class="button" href="https://github.com/a457546190" target="_blank" rel="noreferrer">GitHub @a457546190</a>
+        <div class="contact">
+          <span>手机：待填</span>
+          <span>邮箱：待填</span>
+          <span>所在地 / 意向城市：待填</span>
+          <span>GitHub：github.com/a457546190</span>
         </div>
       </div>
+      <div>
+        <div class="qr">项目主页<br />二维码<br />待替换</div>
+        <div class="qr-caption">作品 / 演示视频</div>
+      </div>
+    </header>
 
-      <aside class="hero-meta" aria-label="基本信息">
-        <!-- TODO: 用户补充姓名、邮箱、手机号、所在城市后替换这里。 -->
-        <div class="meta-row"><span class="meta-label">姓名</span><span class="meta-value">待补充</span></div>
-        <div class="meta-row"><span class="meta-label">方向</span><span class="meta-value">Unity 客户端开发</span></div>
-        <div class="meta-row"><span class="meta-label">学历</span><span class="meta-value">本科 · 西安电子科技大学</span></div>
-        <div class="meta-row"><span class="meta-label">岗位</span><span class="meta-value">实习 / 初级 / 校招社招均可沟通</span></div>
-        <div class="meta-row"><span class="meta-label">联系</span><span class="meta-value">邮箱 / 手机待补充</span></div>
+    <div class="body-grid">
+      <section class="main">
+        <div class="section">
+          <h2 class="section-title">项目经历</h2>
+          <article class="project">
+            <div class="project-head">
+              <h3 class="project-name">GameArClient · 2D 回合制手游 Demo</h3>
+              <div class="project-meta">个人项目｜持续开发</div>
+            </div>
+            <p class="project-intro">
+              面向 Android 的小型二次元回合制 RPG Demo，重点实践移动端 Unity 客户端架构、UI、资源加载、网络通信与完整联调流程；服务端仅作为客户端闭环的配套实现。
+            </p>
+            <div class="stack">
+              <span class="tag">Unity 6.3 LTS</span>
+              <span class="tag">C#</span>
+              <span class="tag">UI Toolkit</span>
+              <span class="tag">UniTask</span>
+              <span class="tag">Addressables</span>
+              <span class="tag">MagicOnion</span>
+              <span class="tag">MessagePack</span>
+              <span class="tag">Android / IL2CPP</span>
+            </div>
+            <ul>
+              <li><strong>客户端架构：</strong>按 Boot → Login → Main → Battle 组织场景与初始化流程，以 AppBootstrap 管理跨场景核心对象，并拆分 Session、网络封装与 Feature 业务层。</li>
+              <li><strong>UI 与资源：</strong>从 UGUI 重构至 UI Toolkit，使用 UXML / USS 构建页面；结合 SVG 资源与 Addressables 管理可异步加载内容，并处理页面生命周期、加载遮罩与资源释放。</li>
+              <li><strong>异步与网络：</strong>以 UniTask 组织异步流程；客户端通过 MagicOnion（gRPC / HTTP/2）与服务端通信，使用 JWT 会话、MessagePack DTO 与共享程序集降低通信层重复定义。</li>
+              <li><strong>服务端联调：</strong>为验证真实客户端链路，配套实现 ASP.NET Core + EF Core + PostgreSQL 服务，并部署至阿里云 Linux，通过 systemd 管理服务；掌握日志排查、数据库迁移及移动端远程联调。</li>
+              <li><strong>工程实践：</strong>完成 Windows x64 与 Android 构建测试，使用 Git / GitHub 管理版本；持续完善登录、资源、养成、背包及回合制战斗等最小可玩循环。</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="section">
+          <h2 class="section-title">经历</h2>
+          <div class="experience-item">
+            <div class="time">2026.06 — 至今</div>
+            <div>
+              <h3 class="exp-title">Unity 客户端集中学习与个人项目开发</h3>
+              <p class="exp-copy">全职投入 Unity / C#、客户端工程实践、算法与基础知识补强，以 GameArClient 为主线持续实现、调试和复盘。</p>
+            </div>
+          </div>
+          <div class="experience-item">
+            <div class="time">2025 — 2026</div>
+            <div>
+              <h3 class="exp-title">公务员考试备考 / 职业方向调整</h3>
+              <p class="exp-copy">完成阶段性备考后重新确认长期职业方向，转向自己更愿意持续投入的游戏客户端开发。</p>
+            </div>
+          </div>
+          <div class="experience-item">
+            <div class="time">2019 — 2025</div>
+            <div>
+              <h3 class="exp-title">西安电子科技大学 · 本科</h3>
+              <p class="exp-copy">专业：待补充。毕业后重新系统梳理职业目标，并开始以项目驱动方式补强工程能力。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 class="section-title">求职说明</h2>
+          <div class="compact-note">
+            求职目标为 <strong>Unity 客户端 / 游戏客户端开发</strong>，不以后端岗位为方向。当前更关注 C# 与 Unity 基础、UI 与资源系统、异步网络、调试能力以及可维护的客户端代码结构；愿从初级、助理或培养型岗位开始，通过真实开发任务快速成长。
+          </div>
+        </div>
+      </section>
+
+      <aside class="side">
+        <div class="section">
+          <h2 class="section-title">技术能力</h2>
+          <div class="skill-group">
+            <h3 class="skill-label">Unity / C#</h3>
+            <p class="skill-copy">Unity 6.x、C#、MonoBehaviour 生命周期、ScriptableObject、异步编程、Android 构建、IL2CPP 基础。</p>
+          </div>
+          <div class="skill-group">
+            <h3 class="skill-label">UI / 资源</h3>
+            <p class="skill-copy">UI Toolkit、UXML / USS、SVG、Addressables；了解 UGUI 与常见移动端 UI 页面管理方式。</p>
+          </div>
+          <div class="skill-group">
+            <h3 class="skill-label">网络通信</h3>
+            <p class="skill-copy">MagicOnion、gRPC / HTTP/2、MessagePack、JWT；能完成客户端请求封装、会话管理与异常处理。</p>
+          </div>
+          <div class="skill-group">
+            <h3 class="skill-label">服务端 / 数据库</h3>
+            <p class="skill-copy">ASP.NET Core、EF Core、PostgreSQL、Linux / systemd。定位为客户端联调与完整项目闭环能力。</p>
+          </div>
+          <div class="skill-group">
+            <h3 class="skill-label">工具与工程化</h3>
+            <p class="skill-copy">Git / GitHub、Visual Studio、VS Code、PowerShell；能通过日志、构建输出和版本差异定位问题。</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 class="section-title">教育背景</h2>
+          <div class="education">
+            <h3 class="school">西安电子科技大学</h3>
+            <div class="edu-meta">本科｜2019 — 2025<br />专业：待补充</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 class="section-title">AI 辅助开发</h2>
+          <ul class="bullet-mini">
+            <li>将 AI 用于方案比较、代码审查、脚手架与 UI 原型，而非直接接受未经验证的输出。</li>
+            <li>通过编译、运行、日志、Git diff 与实际联调验证结果，能识别并修正 AI 生成代码的问题。</li>
+            <li>使用 ChatGPT / Codex / OpenCode 等工具提升资料检索、重构和重复性工作的效率。</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2 class="section-title">正在补强</h2>
+          <ul class="bullet-mini">
+            <li>C# / .NET 与 Unity 常见面试基础</li>
+            <li>数据结构与算法题</li>
+            <li>回合制战斗系统与养成系统完整度</li>
+            <li>项目演示视频与公开作品页</li>
+          </ul>
+        </div>
+
+        <div class="footer-note">
+          此简历按 A4 单页设计。浏览器打印时选择 A4、缩放 100%、边距“无”，并开启“背景图形”可获得最接近设计稿的 PDF。
+        </div>
       </aside>
     </div>
-
-    <section id="project">
-      <div class="page">
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">Featured Project</div>
-            <h2>项目经历</h2>
-          </div>
-          <p class="section-lead">
-            与其堆砌“了解过”的技术名词，我更希望用一个能持续迭代、覆盖客户端核心问题的项目证明学习结果。
-            当前主项目仍在开发中，完成后会补充演示视频与可公开展示内容。
-          </p>
-        </div>
-
-        <article class="card project-card">
-          <div class="project-status"><span class="status-dot"></span> 持续开发中</div>
-          <h3 class="project-title">GameArClient</h3>
-          <p class="project-subtitle">
-            2D 回合制二次元手游 Demo。项目目标不是堆功能，而是围绕一个最小可玩循环，完成 UI、资源、网络、数据与部署之间的真实协作。
-            求职方向始终聚焦 Unity 客户端；服务端部分用于补齐联调能力和理解完整游戏链路。
-          </p>
-
-          <div class="tags" aria-label="技术栈">
-            <span class="tag">Unity 6</span>
-            <span class="tag">C#</span>
-            <span class="tag">UI Toolkit</span>
-            <span class="tag">UXML / USS</span>
-            <span class="tag">Addressables</span>
-            <span class="tag">UniTask</span>
-            <span class="tag">MagicOnion</span>
-            <span class="tag">ASP.NET Core</span>
-            <span class="tag">PostgreSQL</span>
-            <span class="tag">Linux / Aliyun</span>
-          </div>
-
-          <div class="project-points">
-            <div class="point">
-              <strong>客户端 UI</strong>
-              <span>使用 UI Toolkit 组织页面与样式，关注页面生命周期、复用、资源加载与移动端表现。</span>
-            </div>
-            <div class="point">
-              <strong>异步与资源</strong>
-              <span>使用 UniTask 与 Addressables 处理异步流程和资源加载，避免把项目停留在纯静态界面 Demo。</span>
-            </div>
-            <div class="point">
-              <strong>网络联调</strong>
-              <span>使用 MagicOnion 进行客户端与服务端通信，在真实接口约束下设计数据流，而不是只写本地假数据。</span>
-            </div>
-            <div class="point">
-              <strong>完整链路</strong>
-              <span>配套服务端采用 ASP.NET Core + PostgreSQL，并部署至阿里云 Linux，目标是掌握客户端研发所需的联调和排障能力。</span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="skills">
-      <div class="page">
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">Capabilities</div>
-            <h2>技术能力</h2>
-          </div>
-          <p class="section-lead">
-            当前阶段不把自己包装成“资深”。以下能力以真实项目实践为基础，并继续通过 Demo、基础知识、算法题与面试知识体系持续补强。
-          </p>
-        </div>
-
-        <div class="grid three">
-          <article class="card">
-            <span class="skill-index">01 / CLIENT</span>
-            <h3 class="skill-title">Unity / C#</h3>
-            <p class="skill-copy">以 Unity 客户端为主线，持续学习组件生命周期、场景与 UI 管理、异步流程、数据组织和工程结构。</p>
-          </article>
-          <article class="card">
-            <span class="skill-index">02 / UI</span>
-            <h3 class="skill-title">UI Toolkit</h3>
-            <p class="skill-copy">使用 UXML / USS 构建游戏 UI，关注页面拆分、样式复用、矢量资源与可维护性，而非仅靠编辑器手工堆界面。</p>
-          </article>
-          <article class="card">
-            <span class="skill-index">03 / ASYNC</span>
-            <h3 class="skill-title">UniTask / Addressables</h3>
-            <p class="skill-copy">在项目中处理异步调用与资源加载，理解异步生命周期和资源释放需要被纳入客户端架构设计。</p>
-          </article>
-          <article class="card">
-            <span class="skill-index">04 / NETWORK</span>
-            <h3 class="skill-title">MagicOnion</h3>
-            <p class="skill-copy">通过真实客户端—服务端联调学习 RPC、数据契约和网络错误处理，让业务代码建立在真实通信链路上。</p>
-          </article>
-          <article class="card">
-            <span class="skill-index">05 / SERVER</span>
-            <h3 class="skill-title">ASP.NET Core / PostgreSQL</h3>
-            <p class="skill-copy">具备用于个人项目的配套后端开发能力，重点价值是理解接口、数据持久化与客户端联调，而非转向后端求职。</p>
-          </article>
-          <article class="card">
-            <span class="skill-index">06 / ENGINEERING</span>
-            <h3 class="skill-title">Git / Linux / AI</h3>
-            <p class="skill-copy">使用 GitHub 管理项目，能够完成 Linux 服务部署与排障，并把 AI 工具纳入日常开发工作流。</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="ai">
-      <div class="page">
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">AI-assisted Engineering</div>
-            <h2>AI 辅助开发</h2>
-          </div>
-          <p class="section-lead">
-            我把 AI 当作工程工具，而不是“替我会”。目标是提高检索、比较方案、生成初稿和重复性工作的效率，同时保留对代码与结果的判断责任。
-          </p>
-        </div>
-
-        <div class="card ai-card">
-          <blockquote>
-            “让 AI 加速实现，但不把 <span class="accent">AI 生成</span> 等同于 <span class="accent">完成开发</span>。”
-          </blockquote>
-          <div class="ai-list">
-            <div class="ai-item"><strong>方案讨论：</strong>用 AI 快速比较架构取舍、API 设计和可能的边界问题。</div>
-            <div class="ai-item"><strong>代码协作：</strong>用于代码审查、脚手架、重构建议和重复性修改，再由自己阅读与验证。</div>
-            <div class="ai-item"><strong>UI 原型：</strong>利用 AI 在 UI Toolkit / Web 风格布局上的优势快速产出可调整的初稿。</div>
-            <div class="ai-item"><strong>结果验证：</strong>通过编译、运行、调试、日志、版本控制与文档核对 AI 输出，而不是直接照搬。</div>
-            <div class="ai-item"><strong>本页面：</strong>内容方向与事实由本人提供，并使用 AI 协作完成网页设计与实现。</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="experience">
-      <div class="page">
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">Timeline</div>
-            <h2>经历</h2>
-          </div>
-          <p class="section-lead">
-            不隐藏时间线，也不把非相关经历写成虚假的“项目经验”。对过去保持诚实，更重要的是说明现在的职业方向和正在做的事情。
-          </p>
-        </div>
-
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-time">2019 — 2025</div>
-            <div>
-              <h3 class="timeline-title">西安电子科技大学 · 本科</h3>
-              <p class="timeline-copy">完成本科阶段学习。简历不额外包装并不存在的学生组织、实习或科研成果。</p>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-time">2025 — 2026</div>
-            <div>
-              <h3 class="timeline-title">公务员考试备考 / 职业方向调整</h3>
-              <p class="timeline-copy">进行了一年公务员考试准备，之后重新评估长期职业方向，明确转向自己更愿意持续投入的游戏开发与 Unity 客户端岗位。</p>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-time">2026 — NOW</div>
-            <div>
-              <h3 class="timeline-title">Unity 客户端全职学习与项目实践</h3>
-              <p class="timeline-copy">集中投入 Unity / C# 学习与 GameArClient 项目开发，同时补充算法题、计算机基础、Unity 常见面试知识与真实工程实践。</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="about">
-      <div class="page">
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">About</div>
-            <h2>关于我</h2>
-          </div>
-          <p class="section-lead">
-            我的履历并不完美，因此我更希望用当前的投入、项目完成度、基础能力和后续成长速度来证明自己适合进入研发岗位。
-          </p>
-        </div>
-
-        <div class="statement">
-          <article class="card">
-            <h3 class="skill-title">我在找什么</h3>
-            <p class="muted">明确求职 Unity 客户端 / 游戏客户端开发方向。现阶段可以接受实习或初级岗位，比起职位名称，我更看重是否能进入真实项目、接受代码审查并持续成长。</p>
-          </article>
-          <article class="card">
-            <h3 class="skill-title">我能带来什么</h3>
-            <p class="muted">学习目标明确，愿意把问题追到可运行的结果；能独立推进个人项目，也愿意从基础工作做起。对 AI 工具保持开放，但会对最终代码和工程结果负责。</p>
-          </article>
-        </div>
-      </div>
-    </section>
   </main>
-
-  <footer class="footer">
-    <div class="page footer-inner">
-      <span>Unity Client Developer · Resume</span>
-      <span>联系方式待补充 · GitHub @a457546190</span>
-    </div>
-  </footer>
 </body>
 </html>
