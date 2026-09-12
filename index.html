@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Unity 客户端开发一页 A4 简历" />
-  <title>Unity 客户端开发 · 一页简历</title>
+  <title>易港豪 · Unity 客户端开发</title>
   <style>
     :root {
       --ink: #1f2937;
@@ -19,126 +19,160 @@
     }
 
     * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; color: var(--ink); }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      color: var(--ink);
+    body {
+      min-width: 210mm;
+      padding: 14mm 0;
+      background: var(--desk);
       font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif;
+      font-size: 9.25pt;
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
 
-    body {
-      min-width: 210mm;
-      background: var(--desk);
-      padding: 14mm 0;
-      font-size: 9.35pt;
-      line-height: 1.52;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
 
     .sheet {
       width: 210mm;
       height: 297mm;
       margin: 0 auto;
-      padding: 11.5mm 12mm 10.5mm;
-      background: var(--paper);
-      box-shadow: 0 10px 36px rgba(20, 31, 45, 0.14);
+      padding: 11mm 12mm 10mm;
       overflow: hidden;
+      background: var(--paper);
+      box-shadow: 0 10px 36px rgba(20, 31, 45, .14);
     }
 
     .header {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 8mm;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 6mm;
       align-items: start;
-      padding-bottom: 5mm;
+      padding-bottom: 4.8mm;
       border-bottom: 1.5px solid var(--ink);
     }
 
     .identity {
       display: flex;
       align-items: baseline;
-      gap: 5mm;
-      margin-bottom: 2.2mm;
+      gap: 4.5mm;
+      margin-bottom: 2mm;
     }
 
     .name {
       margin: 0;
       font-size: 24pt;
       line-height: 1;
-      letter-spacing: 0.06em;
+      letter-spacing: .06em;
       font-weight: 760;
     }
 
     .role {
       color: var(--accent);
-      font-size: 11.2pt;
-      font-weight: 700;
-      letter-spacing: 0.03em;
+      font-size: 11.1pt;
+      font-weight: 720;
+      letter-spacing: .025em;
     }
 
     .summary {
-      max-width: 135mm;
-      margin: 0 0 2.6mm;
+      max-width: 126mm;
+      margin: 0 0 2.4mm;
       color: #3d4857;
-      font-size: 9.6pt;
-      line-height: 1.58;
+      font-size: 9.35pt;
+      line-height: 1.56;
     }
 
     .contact {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.2mm 4.2mm;
+      gap: 1.1mm 3.8mm;
       color: var(--muted);
-      font-size: 8.55pt;
+      font-size: 8.45pt;
     }
 
     .contact span::before {
       content: "·";
-      margin-right: 1.5mm;
+      margin-right: 1.4mm;
       color: var(--line-strong);
     }
 
     .contact span:first-child::before { display: none; }
 
+    .visuals {
+      display: grid;
+      grid-template-columns: 26mm 24mm;
+      gap: 3mm;
+      align-items: start;
+    }
+
+    .portrait,
+    .qr {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      background: #f8fafc;
+      color: var(--soft);
+      text-align: center;
+    }
+
+    .portrait {
+      width: 26mm;
+      height: 35mm;
+      display: grid;
+      place-items: center;
+      font-size: 7.4pt;
+    }
+
+    .portrait img,
+    .qr img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .portrait img[hidden],
+    .qr img[hidden] { display: none; }
+
+    .photo-fallback,
+    .qr-fallback {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 2mm;
+      line-height: 1.35;
+    }
+
+    .qr-wrap { width: 24mm; }
     .qr {
       width: 24mm;
       height: 24mm;
-      border: 1px solid var(--line-strong);
-      display: grid;
-      place-items: center;
-      text-align: center;
-      color: var(--soft);
-      font-size: 7.2pt;
-      line-height: 1.35;
-      padding: 2mm;
+      font-size: 7pt;
     }
 
+    .qr img { object-fit: contain; }
+
     .qr-caption {
-      margin-top: 1.2mm;
+      margin-top: 1.1mm;
       color: var(--soft);
       text-align: center;
-      font-size: 7pt;
-      letter-spacing: 0.03em;
+      font-size: 6.9pt;
+      line-height: 1.35;
     }
 
     .body-grid {
       display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(0, 0.95fr);
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, .95fr);
       gap: 7mm;
-      padding-top: 5mm;
+      padding-top: 4.8mm;
     }
 
     .main, .side { min-width: 0; }
 
     .section {
-      margin-bottom: 5.1mm;
+      margin-bottom: 4.8mm;
       break-inside: avoid;
     }
 
@@ -147,25 +181,25 @@
     .section-title {
       display: flex;
       align-items: center;
-      gap: 2.4mm;
-      margin: 0 0 2.4mm;
+      gap: 2.3mm;
+      margin: 0 0 2.2mm;
       color: var(--ink);
-      font-size: 11.2pt;
+      font-size: 11pt;
       font-weight: 760;
-      letter-spacing: 0.035em;
+      letter-spacing: .035em;
     }
 
     .section-title::before {
       content: "";
-      width: 2.2mm;
-      height: 4mm;
-      border-radius: 0.5mm;
+      width: 2.1mm;
+      height: 3.9mm;
+      border-radius: .5mm;
       background: var(--accent);
       flex: 0 0 auto;
     }
 
     .project {
-      padding: 3.5mm 4mm 3.4mm;
+      padding: 3.4mm 3.9mm 3.2mm;
       border: 1px solid var(--line);
       border-left: 2.2px solid var(--accent);
       background: #fbfcfe;
@@ -176,61 +210,52 @@
       justify-content: space-between;
       gap: 4mm;
       align-items: baseline;
-      margin-bottom: 1.5mm;
+      margin-bottom: 1.4mm;
     }
 
     .project-name {
       margin: 0;
-      font-size: 12.3pt;
+      font-size: 12.1pt;
       font-weight: 760;
-      letter-spacing: 0.01em;
     }
 
     .project-meta {
       color: var(--muted);
-      font-size: 8.1pt;
+      font-size: 8pt;
       white-space: nowrap;
     }
 
     .project-intro {
-      margin: 0 0 2.2mm;
+      margin: 0 0 2mm;
       color: #465266;
-      font-size: 8.8pt;
+      font-size: 8.7pt;
     }
 
     .stack {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.2mm;
-      margin-bottom: 2.4mm;
+      gap: 1.15mm;
+      margin-bottom: 2.2mm;
     }
 
     .tag {
-      padding: 0.5mm 1.6mm;
+      padding: .45mm 1.55mm;
       border-radius: 1.2mm;
       background: var(--accent-soft);
       color: #315f8e;
-      font-size: 7.55pt;
+      font-size: 7.4pt;
       line-height: 1.5;
     }
 
-    ul {
-      margin: 0;
-      padding-left: 4.3mm;
-    }
-
-    li {
-      margin: 0 0 1.15mm;
-      padding-left: 0.4mm;
-    }
-
+    ul { margin: 0; padding-left: 4.2mm; }
+    li { margin: 0 0 1.05mm; padding-left: .35mm; }
     li:last-child { margin-bottom: 0; }
     li::marker { color: var(--accent); }
 
     .project ul {
       color: #364152;
-      font-size: 8.65pt;
-      line-height: 1.53;
+      font-size: 8.45pt;
+      line-height: 1.5;
     }
 
     .project strong { color: #23384e; }
@@ -238,50 +263,48 @@
     .experience-item {
       display: grid;
       grid-template-columns: 27mm 1fr;
-      gap: 3.3mm;
-      padding: 2.3mm 0;
+      gap: 3.2mm;
+      padding: 2.15mm 0;
       border-bottom: 1px solid var(--line);
     }
 
-    .experience-item:first-of-type { padding-top: 0.4mm; }
+    .experience-item:first-of-type { padding-top: .3mm; }
     .experience-item:last-child { border-bottom: 0; padding-bottom: 0; }
 
     .time {
       color: var(--accent);
-      font-size: 8.2pt;
+      font-size: 8.1pt;
       font-weight: 700;
       white-space: nowrap;
     }
 
     .exp-title {
-      margin: 0 0 0.7mm;
-      font-size: 9.4pt;
+      margin: 0 0 .6mm;
+      font-size: 9.2pt;
       font-weight: 720;
     }
 
     .exp-copy {
       margin: 0;
       color: var(--muted);
-      font-size: 8.35pt;
-      line-height: 1.48;
+      font-size: 8.2pt;
+      line-height: 1.46;
     }
 
     .compact-note {
-      padding: 2.6mm 3.2mm;
+      padding: 2.5mm 3mm;
       border-left: 2px solid var(--line-strong);
       background: #f8fafc;
       color: #4b5565;
-      font-size: 8.45pt;
-      line-height: 1.55;
+      font-size: 8.25pt;
+      line-height: 1.5;
     }
 
-    .side .section {
-      margin-bottom: 4.8mm;
-    }
+    .side .section { margin-bottom: 4.2mm; }
 
     .skill-group {
-      padding-bottom: 2.6mm;
-      margin-bottom: 2.6mm;
+      padding-bottom: 2.35mm;
+      margin-bottom: 2.35mm;
       border-bottom: 1px solid var(--line);
     }
 
@@ -292,83 +315,63 @@
     }
 
     .skill-label {
-      margin: 0 0 1mm;
+      margin: 0 0 .8mm;
       color: #2e3d50;
-      font-size: 8.8pt;
+      font-size: 8.7pt;
       font-weight: 760;
     }
 
     .skill-copy {
       margin: 0;
       color: var(--muted);
-      font-size: 8.2pt;
-      line-height: 1.52;
+      font-size: 8.05pt;
+      line-height: 1.48;
     }
 
     .education {
-      padding: 2.8mm 3.2mm;
+      padding: 2.6mm 3mm;
       background: #f8fafc;
       border-top: 2px solid var(--accent);
     }
 
     .school {
-      margin: 0 0 0.8mm;
-      font-size: 10.1pt;
+      margin: 0 0 .7mm;
+      font-size: 10pt;
       font-weight: 760;
     }
 
     .edu-meta {
       color: var(--muted);
-      font-size: 8pt;
-      line-height: 1.55;
+      font-size: 7.95pt;
+      line-height: 1.5;
     }
 
     .bullet-mini {
       margin: 0;
       padding-left: 4mm;
       color: var(--muted);
-      font-size: 8.15pt;
-      line-height: 1.48;
-    }
-
-    .bullet-mini li { margin-bottom: 1.1mm; }
-
-    .footer-note {
-      margin-top: 3.2mm;
-      padding-top: 2.6mm;
-      border-top: 1px solid var(--line);
-      color: var(--soft);
-      font-size: 7.3pt;
+      font-size: 8pt;
       line-height: 1.45;
     }
 
-    @page {
-      size: A4;
-      margin: 0;
+    .bullet-mini li { margin-bottom: .9mm; }
+
+    .footer-note {
+      margin-top: 3mm;
+      padding-top: 2.4mm;
+      border-top: 1px solid var(--line);
+      color: var(--soft);
+      font-size: 7.15pt;
+      line-height: 1.42;
     }
 
+    @page { size: A4; margin: 0; }
+
     @media print {
-      html, body {
-        width: 210mm;
-        height: 297mm;
-        background: #fff;
-      }
-
-      body {
-        min-width: 0;
-        padding: 0;
-      }
-
-      .sheet {
-        margin: 0;
-        box-shadow: none;
-        page-break-after: avoid;
-      }
-
-      * {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
+      html, body { width: 210mm; height: 297mm; background: #fff; }
+      body { min-width: 0; padding: 0; }
+      .sheet { margin: 0; box-shadow: none; page-break-after: avoid; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     }
   </style>
 </head>
@@ -377,22 +380,32 @@
     <header class="header">
       <div>
         <div class="identity">
-          <h1 class="name">姓名待填</h1>
+          <h1 class="name">易港豪</h1>
           <div class="role">Unity 客户端开发</div>
         </div>
         <p class="summary">
-          西安电子科技大学本科。求职方向明确为 Unity 游戏客户端开发，近期集中进行 Unity 客户端学习与项目实践，正在独立完成一款 2D 回合制手游 Demo。愿从初级 / 培养型岗位起步，以可运行项目、代码质量和持续学习证明能力。
+          西安电子科技大学计算机科学与技术专业本科。求职方向明确为 Unity 游戏客户端开发，近期集中进行 Unity / C# 学习与项目实践，正在独立完成一款 2D 回合制手游 Demo。愿从初级 / 培养型岗位起步，以可运行项目、代码质量和持续学习证明能力。
         </p>
         <div class="contact">
-          <span>手机：待填</span>
+          <span>手机：13696481728</span>
           <span>邮箱：待填</span>
           <span>所在地 / 意向城市：待填</span>
           <span>GitHub：github.com/a457546190</span>
         </div>
       </div>
-      <div>
-        <div class="qr">项目主页<br />二维码<br />待替换</div>
-        <div class="qr-caption">作品 / 演示视频</div>
+
+      <div class="visuals">
+        <div class="portrait">
+          <img src="assets/photo.jpg" alt="个人照片" onerror="this.style.display='none'" />
+          <div class="photo-fallback">本地照片<br />assets/photo.jpg</div>
+        </div>
+        <div class="qr-wrap">
+          <div class="qr">
+            <img src="assets/project-qr.png" alt="项目主页二维码" onerror="this.style.display='none'" />
+            <div class="qr-fallback">项目主页<br />二维码</div>
+          </div>
+          <div class="qr-caption">作品 / 演示视频</div>
+        </div>
       </div>
     </header>
 
@@ -420,9 +433,9 @@
             </div>
             <ul>
               <li><strong>客户端架构：</strong>按 Boot → Login → Main → Battle 组织场景与初始化流程，以 AppBootstrap 管理跨场景核心对象，并拆分 Session、网络封装与 Feature 业务层。</li>
-              <li><strong>UI 与资源：</strong>从 UGUI 重构至 UI Toolkit，使用 UXML / USS 构建页面；结合 SVG 资源与 Addressables 管理可异步加载内容，并处理页面生命周期、加载遮罩与资源释放。</li>
-              <li><strong>异步与网络：</strong>以 UniTask 组织异步流程；客户端通过 MagicOnion（gRPC / HTTP/2）与服务端通信，使用 JWT 会话、MessagePack DTO 与共享程序集降低通信层重复定义。</li>
-              <li><strong>服务端联调：</strong>为验证真实客户端链路，配套实现 ASP.NET Core + EF Core + PostgreSQL 服务，并部署至阿里云 Linux，通过 systemd 管理服务；掌握日志排查、数据库迁移及移动端远程联调。</li>
+              <li><strong>UI 与资源：</strong>从 UGUI 重构至 UI Toolkit，使用 UXML / USS 构建页面；结合 SVG 资源与 Addressables 管理异步加载内容，并处理页面生命周期、加载遮罩与资源释放。</li>
+              <li><strong>异步与网络：</strong>以 UniTask 组织异步流程；客户端通过 MagicOnion（gRPC / HTTP/2）与服务端通信，使用 JWT 会话、MessagePack DTO 与共享程序集降低重复定义。</li>
+              <li><strong>服务端联调：</strong>配套实现 ASP.NET Core + EF Core + PostgreSQL 服务并部署至阿里云 Linux，通过 systemd 管理服务，完成数据库迁移、日志排查及移动端远程联调。</li>
               <li><strong>工程实践：</strong>完成 Windows x64 与 Android 构建测试，使用 Git / GitHub 管理版本；持续完善登录、资源、养成、背包及回合制战斗等最小可玩循环。</li>
             </ul>
           </article>
@@ -441,14 +454,14 @@
             <div class="time">2025 — 2026</div>
             <div>
               <h3 class="exp-title">公务员考试备考 / 职业方向调整</h3>
-              <p class="exp-copy">完成阶段性备考后重新确认长期职业方向，转向自己更愿意持续投入的游戏客户端开发。</p>
+              <p class="exp-copy">完成阶段性备考后重新确定长期职业方向，转向游戏客户端开发，并开始系统补足 Unity、C# 与工程实践能力。</p>
             </div>
           </div>
           <div class="experience-item">
             <div class="time">2019 — 2025</div>
             <div>
               <h3 class="exp-title">西安电子科技大学 · 本科</h3>
-              <p class="exp-copy">专业：待补充。毕业后重新系统梳理职业目标，并开始以项目驱动方式补强工程能力。</p>
+              <p class="exp-copy">计算机科学与技术学院 · 计算机科学与技术专业。</p>
             </div>
           </div>
         </div>
@@ -456,7 +469,7 @@
         <div class="section">
           <h2 class="section-title">求职说明</h2>
           <div class="compact-note">
-            求职目标为 <strong>Unity 客户端 / 游戏客户端开发</strong>，不以后端岗位为方向。当前更关注 C# 与 Unity 基础、UI 与资源系统、异步网络、调试能力以及可维护的客户端代码结构；愿从初级、助理或培养型岗位开始，通过真实开发任务快速成长。
+            目标岗位为 Unity 客户端开发。后端、数据库与 Linux 部署能力主要用于完成真实客户端闭环与联调，不作为主要求职方向；更希望在实际项目中持续提升客户端架构、UI、战斗逻辑、资源管理与性能优化能力。
           </div>
         </div>
       </section>
@@ -466,23 +479,15 @@
           <h2 class="section-title">技术能力</h2>
           <div class="skill-group">
             <h3 class="skill-label">Unity / C#</h3>
-            <p class="skill-copy">Unity 6.x、C#、MonoBehaviour 生命周期、ScriptableObject、异步编程、Android 构建、IL2CPP 基础。</p>
+            <p class="skill-copy">Unity 6、C#、MonoBehaviour 生命周期、场景与对象管理、UGUI / UI Toolkit、Input System、Addressables、Android 构建与 IL2CPP。</p>
           </div>
           <div class="skill-group">
-            <h3 class="skill-label">UI / 资源</h3>
-            <p class="skill-copy">UI Toolkit、UXML / USS、SVG、Addressables；了解 UGUI 与常见移动端 UI 页面管理方式。</p>
+            <h3 class="skill-label">异步 / 网络</h3>
+            <p class="skill-copy">UniTask、MagicOnion、gRPC / HTTP/2、MessagePack、JWT，会话与网络请求封装，客户端与远程服务器联调。</p>
           </div>
           <div class="skill-group">
-            <h3 class="skill-label">网络通信</h3>
-            <p class="skill-copy">MagicOnion、gRPC / HTTP/2、MessagePack、JWT；能完成客户端请求封装、会话管理与异常处理。</p>
-          </div>
-          <div class="skill-group">
-            <h3 class="skill-label">服务端 / 数据库</h3>
-            <p class="skill-copy">ASP.NET Core、EF Core、PostgreSQL、Linux / systemd。定位为客户端联调与完整项目闭环能力。</p>
-          </div>
-          <div class="skill-group">
-            <h3 class="skill-label">工具与工程化</h3>
-            <p class="skill-copy">Git / GitHub、Visual Studio、VS Code、PowerShell；能通过日志、构建输出和版本差异定位问题。</p>
+            <h3 class="skill-label">配套工程能力</h3>
+            <p class="skill-copy">ASP.NET Core、EF Core、PostgreSQL、Linux、systemd、Git / GitHub；能够自行搭建服务端以验证客户端完整链路。</p>
           </div>
         </div>
 
@@ -490,31 +495,32 @@
           <h2 class="section-title">教育背景</h2>
           <div class="education">
             <h3 class="school">西安电子科技大学</h3>
-            <div class="edu-meta">本科｜2019 — 2025<br />专业：待补充</div>
+            <div class="edu-meta">
+              2019 — 2025 · 本科<br />
+              计算机科学与技术学院<br />
+              计算机科学与技术专业
+            </div>
           </div>
         </div>
 
         <div class="section">
           <h2 class="section-title">AI 辅助开发</h2>
           <ul class="bullet-mini">
-            <li>将 AI 用于方案比较、代码审查、脚手架与 UI 原型，而非直接接受未经验证的输出。</li>
-            <li>通过编译、运行、日志、Git diff 与实际联调验证结果，能识别并修正 AI 生成代码的问题。</li>
-            <li>使用 ChatGPT / Codex / OpenCode 等工具提升资料检索、重构和重复性工作的效率。</li>
+            <li>使用 AI 进行方案比较、代码审查、脚手架、UI 原型与重复性开发工作。</li>
+            <li>对 AI 产出通过编译、运行、日志、Git diff 与真实联调进行验证，不以生成结果替代工程判断。</li>
           </ul>
         </div>
 
         <div class="section">
           <h2 class="section-title">正在补强</h2>
           <ul class="bullet-mini">
-            <li>C# / .NET 与 Unity 常见面试基础</li>
-            <li>数据结构与算法题</li>
-            <li>回合制战斗系统与养成系统完整度</li>
-            <li>项目演示视频与公开作品页</li>
+            <li>持续刷算法题，补强数据结构、复杂度分析与常见面试题。</li>
+            <li>系统复习 C# / Unity 基础、GC 与性能分析、资源与渲染相关知识。</li>
           </ul>
         </div>
 
         <div class="footer-note">
-          此简历按 A4 单页设计。浏览器打印时选择 A4、缩放 100%、边距“无”，并开启“背景图形”可获得最接近设计稿的 PDF。
+          项目主页将提供源码、演示视频与更完整的技术说明。当前 Demo 仍在持续开发，正式投递前将以可运行版本作为主要作品证明。
         </div>
       </aside>
     </div>
