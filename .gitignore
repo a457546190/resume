@@ -1,0 +1,5 @@
+# Keep personal photo local when exporting the resume.
+assets/photo.jpg
+
+# Avoid accidentally committing generated resume files.
+*.pdf
